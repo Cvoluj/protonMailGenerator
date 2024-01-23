@@ -129,7 +129,14 @@ while True:
     pyautogui.keyUp('shiftleft')
     pyautogui.keyUp('shiftright')
     pyautogui.keyUp('ctrlleft')
-    pyautogui.typewrite("var element = document.querySelector('.bi-clipboard');if (element){element.click();}")
+    pyautogui.hotkey("ctrl", "a")
+    pyautogui.hotkey("ctrl", "c")
+    pyautogui.hotkey("ctrl", "v")
+    pyautogui.typewrite('allow pasting')
+    pyautogui.press('\n')
+    pyautogui.typewrite( 
+    "var element = document.querySelector('.bi-clipboard');if (element){element.click();}"
+    )
     pyautogui.press('\n')
     time.sleep(3)
     pyautogui.keyDown('ctrlleft')
