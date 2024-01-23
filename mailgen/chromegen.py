@@ -19,19 +19,6 @@ kernel32.GlobalUnlock.argtypes = [ctypes.c_void_p]
 user32 = ctypes.windll.user32
 user32.GetClipboardData.restype = ctypes.c_void_p
 
-def getClip6digit():
-    user32.OpenClipboard(0)
-    try:
-        if user32.IsClipboardFormatAvailable(CF_TEXT):
-            data = user32.GetClipboardData(CF_TEXT)
-            data_locked = kernel32.GlobalLock(data)
-            text = ctypes.c_char_p(data_locked)
-            value = text.value
-            kernel32.GlobalUnlock(data_locked)
-            return str(re.findall(r'(\d{6})', (str(value))))
-    finally:
-        user32.CloseClipboard()
-
 def getMail():
     user32.OpenClipboard(0)
     try:
@@ -47,11 +34,47 @@ def getMail():
             return False
     finally:
         user32.CloseClipboard()
-webbrowser.open('https://account.proton.me/signup?plan=free')
-time.sleep(5)
 
+codeAvailable =  False
+def get_code(codeAvailable):
+    user32.OpenClipboard(0)
+    while codeAvailable != True:
 
-
+        pyautogui.keyDown('ctrlleft')
+        pyautogui.keyDown('shiftleft')
+        pyautogui.keyDown('shiftright')
+        pyautogui.press('j')
+        pyautogui.keyUp('shiftleft')
+        pyautogui.keyUp('shiftright')
+        pyautogui.keyUp('ctrlleft')
+        pyautogui.typewrite(
+            "var verificationCode = document.querySelector('.messages-list pre')?.innerText.match(/\\b\d{6}\\b/)?.[0];"
+            "var tempTextarea = document.createElement('textarea');"
+            "tempTextarea.value = verificationCode;document.body.appendChild(tempTextarea);"
+            "tempTextarea.select();document.execCommand('copy');document.body.removeChild(tempTextarea);"
+        )
+        time.sleep(5)
+        pyautogui.typewrite('\n')
+        pyautogui.keyDown('ctrlleft')
+        pyautogui.keyDown('shiftleft')
+        pyautogui.keyDown('shiftright')
+        pyautogui.press('j')
+        pyautogui.keyUp('shiftleft')
+        pyautogui.keyUp('shiftright')
+        pyautogui.keyUp('ctrlleft')
+        
+        time.sleep(1)
+        if user32.IsClipboardFormatAvailable(CF_TEXT):
+            data = user32.GetClipboardData(CF_TEXT)
+            data_locked = kernel32.GlobalLock(data)
+            text = ctypes.c_char_p(data_locked)
+            value = text.value
+            value = str(value.decode('utf-8'))
+            kernel32.GlobalUnlock(data_locked)
+            if re.match(r'^\d{6}', str(value)):
+                codeAvailable = True
+                user32.CloseClipboard()
+      
 def randomize(
                 _option_,
                 _length_
@@ -93,6 +116,10 @@ def randomize(
     else:
         return 'error'
 
+
+webbrowser.open('https://account.proton.me/signup?plan=free')
+time.sleep(10)
+
 # Username
 _username_=randomize('-s',5)+randomize('-s',5)+randomize('-s',5)
 pyautogui.typewrite(_username_ + '\t\t')
@@ -103,21 +130,25 @@ print("Username:" + _username_)
 _password_=randomize('-p',16)
 pyautogui.typewrite(_password_+'\t'+_password_+'\t')
 print("Password:" + _password_)
-
+time.sleep(2)
+pyautogui.typewrite(_password_)
 pyautogui.typewrite('\n')
+
 time.sleep(5)
-pyautogui.typewrite('\t\t\t\n')
+pyautogui.typewrite('\t\t\t')
+pyautogui.typewrite('\n')
+time.sleep(1)
 
 pyautogui.keyDown('ctrlleft');  pyautogui.typewrite('t'); pyautogui.keyUp('ctrlleft')
 
 time.sleep(10)
 pyautogui.typewrite('https://dropmail.me/\n')
 
-
 pyautogui.keyDown('shift');pyautogui.keyDown('down'); pyautogui.keyUp('down'); pyautogui.keyUp('shift')
 time.sleep(10)
 
 newMail = True
+allow_pasting = None
 while True:
     if not newMail:
         pyautogui.keyDown('ctrlleft'); pyautogui.typewrite('r'); pyautogui.keyUp('ctrlleft')
@@ -132,7 +163,9 @@ while True:
     pyautogui.hotkey("ctrl", "a")
     pyautogui.hotkey("ctrl", "c")
     pyautogui.hotkey("ctrl", "v")
-    pyautogui.typewrite('allow pasting')
+    if allow_pasting == None:
+        pyautogui.typewrite('allow pasting')
+        allow_pasting = True
     pyautogui.press('\n')
     pyautogui.typewrite( 
     "var element = document.querySelector('.bi-clipboard');if (element){element.click();}"
@@ -152,37 +185,18 @@ while True:
         break
 
 pyautogui.keyDown('ctrlleft');  pyautogui.typewrite('\t'); pyautogui.keyUp('ctrlleft')
-time.sleep(1)
-#äpyautogui.typewrite(newMail)
-pyautogui.keyDown('ctrlleft');  pyautogui.typewrite('v'); pyautogui.keyUp('ctrlleft')
-pyautogui.press('backspace')
-pyautogui.typewrite('\n')
 
+pyautogui.hotkey('ctrl', 'v')
+time.sleep(1)
+pyautogui.typewrite('\n')
+time.sleep(5)
+
+pyautogui.keyDown('ctrlleft');  pyautogui.typewrite('\t'); pyautogui.keyUp('ctrlleft')
 time.sleep(10)
-
+get_code(codeAvailable=codeAvailable)
 pyautogui.keyDown('ctrlleft');  pyautogui.typewrite('\t'); pyautogui.keyUp('ctrlleft')
-time.sleep(1)
-
-#pyautogui.typewrite('\t\t\t\t\t\t\t\t\t\t\t\t\t\n')
-
-#time.sleep(5)
-
-
-pyautogui.keyDown('ctrlleft');  pyautogui.typewrite('a'); pyautogui.keyUp('ctrlleft')
-pyautogui.keyDown('ctrlleft'); pyautogui.typewrite('c'); pyautogui.keyUp('ctrlleft')
-
-
-pyautogui.keyDown('ctrlleft');  pyautogui.typewrite('\t'); pyautogui.keyUp('ctrlleft')
-time.sleep(5)
-pyautogui.typewrite(str(getClip6digit()) + '\n')
-
-
-time.sleep(5)
+pyautogui.hotkey('ctrl', 'v')
 pyautogui.typewrite('\n')
-time.sleep(5)
-pyautogui.typewrite('\t\t\t\t\n')
-time.sleep(1)
-pyautogui.typewrite('\t\n')
 
 print(_username_+"@proton.me:" + _password_)
 
