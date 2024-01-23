@@ -96,6 +96,7 @@ def randomize(
 # Username
 _username_=randomize('-s',5)+randomize('-s',5)+randomize('-s',5)
 pyautogui.typewrite(_username_ + '\t\t')
+# pyautogui.typewrite('\t')
 print("Username:" + _username_)
 
 # Password
@@ -121,15 +122,23 @@ while True:
     if not newMail:
         pyautogui.keyDown('ctrlleft'); pyautogui.typewrite('r'); pyautogui.keyUp('ctrlleft')
         time.sleep(5)
-    pyautogui.typewrite('\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t')
     pyautogui.keyDown('ctrlleft')
     pyautogui.keyDown('shiftleft')
     pyautogui.keyDown('shiftright')
-    pyautogui.press('down')
+    pyautogui.press('j')
     pyautogui.keyUp('shiftleft')
     pyautogui.keyUp('shiftright')
     pyautogui.keyUp('ctrlleft')
-    pyautogui.keyDown('ctrlleft'); pyautogui.typewrite('c'); pyautogui.keyUp('ctrlleft')
+    pyautogui.typewrite("var element = document.querySelector('.bi-clipboard');if (element){element.click();}")
+    pyautogui.press('\n')
+    time.sleep(3)
+    pyautogui.keyDown('ctrlleft')
+    pyautogui.keyDown('shiftleft')
+    pyautogui.keyDown('shiftright')
+    pyautogui.press('j')
+    pyautogui.keyUp('shiftleft')
+    pyautogui.keyUp('shiftright')
+    pyautogui.keyUp('ctrlleft')
     newMail = getMail()
     if newMail:
         print("10 min mail: " + newMail)
