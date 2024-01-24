@@ -28,7 +28,7 @@ def getMail():
             text = ctypes.c_char_p(data_locked)
             value = text.value
             kernel32.GlobalUnlock(data_locked)
-            if "@dropmail.me" in str(value) or "@emltmp.com" in str(value) or "@spymail.one" in str(value) or "@10mail.org" in str(value):
+            if "@dropmail.me" in str(value):
                 match = re.search(r'[\w.+-]+@[\w-]+\.[\w.-]+', str(value))
                 return str(match.group(0))
             return False
@@ -37,43 +37,31 @@ def getMail():
 
 codeAvailable =  False
 def get_code(codeAvailable):
-    user32.OpenClipboard(0)
-    while codeAvailable != True:
 
-        pyautogui.keyDown('ctrlleft')
-        pyautogui.keyDown('shiftleft')
-        pyautogui.keyDown('shiftright')
-        pyautogui.press('j')
-        pyautogui.keyUp('shiftleft')
-        pyautogui.keyUp('shiftright')
-        pyautogui.keyUp('ctrlleft')
-        pyautogui.typewrite(
-            "var verificationCode = document.querySelector('.messages-list pre')?.innerText.match(/\\b\d{6}\\b/)?.[0];"
-            "var tempTextarea = document.createElement('textarea');"
-            "tempTextarea.value = verificationCode;document.body.appendChild(tempTextarea);"
-            "tempTextarea.select();document.execCommand('copy');document.body.removeChild(tempTextarea);"
-        )
-        time.sleep(5)
-        pyautogui.typewrite('\n')
-        pyautogui.keyDown('ctrlleft')
-        pyautogui.keyDown('shiftleft')
-        pyautogui.keyDown('shiftright')
-        pyautogui.press('j')
-        pyautogui.keyUp('shiftleft')
-        pyautogui.keyUp('shiftright')
-        pyautogui.keyUp('ctrlleft')
+    pyautogui.keyDown('ctrlleft')
+    pyautogui.keyDown('shiftleft')
+    pyautogui.keyDown('shiftright')
+    pyautogui.press('j')
+    pyautogui.keyUp('shiftleft')
+    pyautogui.keyUp('shiftright')
+    pyautogui.keyUp('ctrlleft')
+    pyautogui.typewrite(
+        "var verificationCode = document.querySelector('.messages-list pre')?.innerText.match(/\\b\d{6}\\b/)?.[0];"
+        "var tempTextarea = document.createElement('textarea');"
+        "tempTextarea.value = verificationCode;document.body.appendChild(tempTextarea);"
+        "tempTextarea.select();document.execCommand('copy');document.body.removeChild(tempTextarea);"
+    )
+    time.sleep(5)
+    pyautogui.typewrite('\n')
+    pyautogui.keyDown('ctrlleft')
+    pyautogui.keyDown('shiftleft')
+    pyautogui.keyDown('shiftright')
+    pyautogui.press('j')
+    pyautogui.keyUp('shiftleft')
+    pyautogui.keyUp('shiftright')
+    pyautogui.keyUp('ctrlleft')
         
-        time.sleep(1)
-        if user32.IsClipboardFormatAvailable(CF_TEXT):
-            data = user32.GetClipboardData(CF_TEXT)
-            data_locked = kernel32.GlobalLock(data)
-            text = ctypes.c_char_p(data_locked)
-            value = text.value
-            value = str(value.decode('utf-8'))
-            kernel32.GlobalUnlock(data_locked)
-            if re.match(r'^\d{6}', str(value)):
-                codeAvailable = True
-                user32.CloseClipboard()
+    time.sleep(1)
       
 def randomize(
                 _option_,
@@ -192,12 +180,20 @@ pyautogui.typewrite('\n')
 time.sleep(5)
 
 pyautogui.keyDown('ctrlleft');  pyautogui.typewrite('\t'); pyautogui.keyUp('ctrlleft')
-time.sleep(10)
+time.sleep(18)
 get_code(codeAvailable=codeAvailable)
 pyautogui.keyDown('ctrlleft');  pyautogui.typewrite('\t'); pyautogui.keyUp('ctrlleft')
 pyautogui.hotkey('ctrl', 'v')
 pyautogui.typewrite('\n')
 
+time.sleep(7)
+pyautogui.typewrite('\n')
+time.sleep(2)
+pyautogui.typewrite('\t\t\t')
+pyautogui.typewrite('\n')
+time.sleep(1)
+pyautogui.typewrite('\t')
+pyautogui.typewrite('\n')
 print(_username_+"@proton.me:" + _password_)
 
 logfile = open("accLog.txt", "a")
