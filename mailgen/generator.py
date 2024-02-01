@@ -163,6 +163,7 @@ pyautogui.typewrite(str(code))
 pyautogui.typewrite('\n')
 
 time.sleep(7)
+pyautogui.typewrite('\t\t')
 pyautogui.typewrite('\n')
 time.sleep(2)
 pyautogui.typewrite('\t\t\t')
