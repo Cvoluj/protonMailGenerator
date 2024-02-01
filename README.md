@@ -1,8 +1,8 @@
 # Necessary
 Proton by itself changes ways to register email, sometimes CAPTCHA/SMS sometimes CAPTCHA/EMAIL (exact way that we needed) <br>
-Proton temporary blocks most part of email domains, so before running `chromegen.py` I reccomend you by hand found 1-2 email domains that work for current time and use only them
+Proton temporary blocks most part of email domains, so before running script I reccomend you by hand found 1-2 email domains that working for current time and use only them
 
-Fixed only `chromegen.py`
+Fixed both `chromegen.py` and `generator.py`
 
 # protonMailGenerator
 A E-Mail Generator
